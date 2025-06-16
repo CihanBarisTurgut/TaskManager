@@ -8,7 +8,7 @@ TaskManager, kullanıcıların günlük, haftalık ve aylık görevlerini yönet
 **Backend & Veritabanı**
 - **ASP.NET Core 8**: Web API çatısı
 - **Entity Framework Core**: ORM (Object-Relational Mapping)
-- **SQL Server**: Veritabanı
+- **MSSQL Server**: Veritabanı
 
 **Kimlik Doğrulama & Güvenlik**
 - **ASP.NET Core Identity**: Kullanıcı yönetimi
@@ -29,8 +29,8 @@ TaskManager, kullanıcıların günlük, haftalık ve aylık görevlerini yönet
 ##  Temel Özellikler
 
 - ** Güvenli Kimlik Doğrulama**: Kullanıcı kaydı, girişi ve JWT tabanlı yetkilendirme.
-- ** Görev Yönetimi**: Görev oluşturma, listeleme, güncelleme ve durum takibi (Günlük, Haftalık, Aylık).
-- ** Detaylı Raporlama**: Görev türlerine ve tamamlanma durumlarına göre istatistiksel raporlar.
+- ** Görev Yönetimi**: Görev oluşturma, listeleme ve durum takibi (Günlük, Haftalık, Aylık).
+
 
 ---
 ##  API Endpoint'leri
@@ -48,7 +48,7 @@ TaskManager, kullanıcıların günlük, haftalık ve aylık görevlerini yönet
 
 ### Gereksinimler
 - .NET 8 SDK
-- SQL Server (veya LocalDB)
+- MSSQL Server (veya LocalDB)
 
 ### Kurulum Adımları
 1.  Repository'yi klonlayın: `git clone <repository-url>`
