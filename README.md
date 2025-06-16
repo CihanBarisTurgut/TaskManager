@@ -79,7 +79,7 @@ TaskManager, kullanıcıların günlük, haftalık ve aylık görevlerini yönet
   }
 }
 ```
---**Kayıt olduktan sonra jwt token döner.**
+**Kayıt olduktan sonra jwt token döner.**
 ![auth](https://github.com/user-attachments/assets/ddd1dfa4-f2bc-4a65-9f69-1489aa1d5e18)
 #
 **Fluent validation kullanımı.**
