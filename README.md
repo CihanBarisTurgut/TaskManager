@@ -75,7 +75,7 @@ TaskManager, kullanıcıların günlük, haftalık ve aylık görevlerini yönet
   "JwtSettings": {
     "SecretKey": "pitonkullanicilariicinsupergizligirisanahtari",
     "Issuer": "TaskManagerAPI",
-    "Audience": "TaskManagerClient"
+    "Audience": "TaskManagerUsers"
   }
 }
 ```
