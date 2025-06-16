@@ -1,8 +1,96 @@
-# 🚀 Proje Yapısı ve Dosya Açıklamaları
+#  TaskManager API
 
-Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevlerini açıklamaktadır.
+TaskManager, kullanıcıların günlük, haftalık ve aylık görevlerini yönetebileceği RESTful API tabanlı bir görev yönetim sistemidir. Modern .NET teknolojileri kullanılarak geliştirilmiş, güvenli ve ölçeklenebilir bir mimariye sahiptir.
 
-## 🏁 Başlangıç ve Yapılandırma (Configuration & Startup)
+---
+##  Teknoloji ve Mimariler
+
+**Backend & Veritabanı**
+- **ASP.NET Core 8**: Web API çatısı
+- **Entity Framework Core**: ORM (Object-Relational Mapping)
+- **SQL Server**: Veritabanı
+
+**Kimlik Doğrulama & Güvenlik**
+- **ASP.NET Core Identity**: Kullanıcı yönetimi
+- **JWT (JSON Web Token)**: Token tabanlı kimlik doğrulama
+
+**Yardımcı Kütüphaneler**
+- **FluentValidation**: Gelişmiş veri doğrulama
+- **AutoMapper**: Nesne eşleme (DTO ↔ Entity)
+- **Swagger/OpenAPI**: API dokümantasyonu ve test
+
+**Mimari Desenler**
+- Repository Pattern
+- Service Pattern
+- Dependency Injection (DI)
+- DTO Pattern
+
+---
+##  Temel Özellikler
+
+- ** Güvenli Kimlik Doğrulama**: Kullanıcı kaydı, girişi ve JWT tabanlı yetkilendirme.
+- ** Görev Yönetimi**: Görev oluşturma, listeleme, güncelleme ve durum takibi (Günlük, Haftalık, Aylık).
+- ** Detaylı Raporlama**: Görev türlerine ve tamamlanma durumlarına göre istatistiksel raporlar.
+
+---
+##  API Endpoint'leri
+
+### Authentication
+- `POST /api/auth/register` : Yeni bir kullanıcı kaydı oluşturur.
+- `POST /api/auth/login` : Kullanıcı girişi yaparak JWT token alır.
+
+### Tasks
+- `POST /api/task/create` : (Yetki Gerekli) Yeni bir görev oluşturur.
+- `POST /api/task/list` : (Yetki Gerekli) Tüm görevleri ve raporları listeler.
+
+---
+##  Projeyi Çalıştırma
+
+### Gereksinimler
+- .NET 8 SDK
+- SQL Server (veya LocalDB)
+
+### Kurulum Adımları
+1.  Repository'yi klonlayın: `git clone <repository-url>`
+2.  `TaskManager/appsettings.json` dosyasında `ConnectionStrings` bölümünü kendi veritabanı bilgilerinize göre güncelleyin.
+3.  Package Manager Console'da `Update-Database` komutunu çalıştırarak veritabanını oluşturun.
+4.  Projeyi çalıştırın: `dotnet run`
+5.  API'yi test etmek için `https://localhost:PORT/swagger` adresine gidin.
+
+---
+## 🔧 Yapılandırma (Configuration)
+
+**Veritabanı Bağlantısı (`appsettings.json`)**
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=.;Database=TaskManagerDB;Trusted_Connection=true;TrustServerCertificate=true;"
+  }
+}
+```
+
+**JWT Ayarları (`appsettings.json`)**
+```json
+{
+  "JwtSettings": {
+    "SecretKey": "pitonkullanicilariicinsupergizligirisanahtari",
+    "Issuer": "TaskManagerAPI",
+    "Audience": "TaskManagerClient"
+  }
+}
+```
+--**Kayıt olduktan sonra jwt token döner.**
+![auth](https://github.com/user-attachments/assets/ddd1dfa4-f2bc-4a65-9f69-1489aa1d5e18)
+#
+**Fluent validation kullanımı.**
+![fluentvalidation](https://github.com/user-attachments/assets/e378ed41-1de5-4cf4-98ce-de8d2fcf253e)
+#
+**Tasklar'ı listeler.**
+![listtask](https://github.com/user-attachments/assets/884bffb4-8c7e-4523-b94d-b57c1a747c17)
+
+
+
+##  Başlangıç ve Yapılandırma (Configuration & Startup)
 ---
 **`Program.cs`**
 > ASP.NET Core uygulamasının başlangıç noktasıdır. **Dependency Injection**, veritabanı bağlamı, **Identity**, **JWT** kimlik doğrulama, **FluentValidation**, **Swagger** ve **CORS** yapılandırmalarını içerir. Uygulama başlatma, middleware pipeline ve hata yönetimi işlemlerini gerçekleştirir.
@@ -16,7 +104,7 @@ Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevleri
 **`ClaimConstants.cs`**
 > JWT token'larda veya kimlik doğrulama işlemlerinde kullanılacak `claim` anahtarlarını **sabit değerler** olarak tutar.
 
-## 📁 Modeller ve Numaralandırmalar (Models & Enums)
+##  Modeller ve Numaralandırmalar (Models & Enums)
 ---
 **`User.cs`**
 > ASP.NET Core Identity'nin `IdentityUser` sınıfını genişletir. Temel kimlik doğrulama özelliklerine ek olarak **ad, soyad** ve **görev koleksiyonu** ekler. `Id`, `UserName`, `Email` gibi özellikler Identity'den otomatik olarak miras alınır.
@@ -27,7 +115,7 @@ Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevleri
 **`TaskTypes.cs`**
 > Görev türlerini kategorize etmek için kullanılan bir `enum` yapısıdır. Görevlerin periyodikliğini belirtir (günlük, haftalık veya aylık) ve veritabanında `integer` değerler olarak saklanır.
 
-## 📦 DTO'lar (Data Transfer Objects)
+##  DTO'lar (Data Transfer Objects)
 ---
 **`AuthDTOs.cs`**
 > Kullanıcı kimlik doğrulama işlemleri için veri transferi yapar. `RegisterDTO` kayıt için, `LoginDTO` giriş için gerekli alanları içerir.
@@ -38,7 +126,7 @@ Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevleri
 **`TaskDTO.cs`**
 > Görev yönetimi işlemleri için farklı veri transfer nesnelerini tanımlar. `CreateTaskDTO` yeni görev oluşturmak, `UpdateTaskDTO` güncelleme, `TaskResponseDTO` görev detayları ve `TaskReportDTO` ise görev istatistikleri ve raporları için kullanılır.
 
-## 🛡️ Doğrulayıcılar (Validators)
+##  Doğrulayıcılar (Validators)
 ---
 **`RegisterValidator.cs`**
 > **FluentValidation** kütüphanesi kullanarak `RegisterDTO` için detaylı doğrulama kuralları tanımlar. Her alan için zorunluluk, uzunluk ve format kontrollerini yapar. Şifre için **güçlü parola politikası** uygular ve kullanıcı dostu hata mesajları sağlar.
@@ -46,7 +134,7 @@ Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevleri
 **`TaskCreateValidator.cs`**
 > **FluentValidation** kütüphanesi kullanarak `CreateTaskDTO` için kapsamlı doğrulama kuralları tanımlar. Başlık zorunluluğu, karakter sınırları, kullanıcı ID geçerliliği ve tarih kontrolü yapar. Veri bütünlüğünü korur ve anlaşılır Türkçe hata mesajları sağlar.
 
-## 🎮 Denetleyiciler (Controllers)
+##  Denetleyiciler (Controllers)
 ---
 **`AuthController.cs`**
 > Kimlik doğrulama (authentication) işlemlerini yönetir. Kullanıcı **kaydı (register)** ve **giriş (login)** işlemlerini API endpoint'leri olarak sunar. İş mantığını `Service` katmanına devredip sadece HTTP isteklerini yönetir.
@@ -54,7 +142,7 @@ Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevleri
 **`TaskController.cs`**
 > Görev (task) yönetimi işlemlerini yönetir. Yeni görev oluşturma ve mevcut görevleri listeleme işlemlerini API endpoint'leri olarak sunar. İş mantığını `Service` katmanına devredip sadece HTTP isteklerini yönetir.
 
-## ⚙️ Servisler (Business Logic)
+##  Servisler (Business Logic)
 ---
 **`IUserService.cs` / `UserService.cs`**
 > **Arayüz (Interface):** Kullanıcı kaydı ve giriş işlemlerinin imzalarını belirtir.
@@ -68,7 +156,7 @@ Bu doküman, projenin mimarisini ve içerisindeki temel sınıfların görevleri
 > **Arayüz (Interface):** JWT token oluşturma işleminin imzasını belirtir.
 > **Sınıf (Class):** Kullanıcı bilgilerini alıp güvenli bir **JWT token** üretir. Token içerisine kullanıcı `claim`'lerini ekler, geçerlilik süresi belirler ve güvenli imzalama yapar. Kimlik doğrulama sisteminin ana bileşenidir.
 
-## 🗄️ Repositories (Data Access Layer)
+##  Repositories (Data Access Layer)
 ---
 **`ITaskRepository.cs` / `TaskRepository.cs`**
 > **Arayüz (Interface):** **Repository Pattern**'in bir parçası olarak, görevlerle ilgili veritabanı işlemlerinin imzalarını belirtir. Bu, Dependency Injection ve Unit Testing için kritik öneme sahiptir.
